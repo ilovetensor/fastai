@@ -1,4 +1,5 @@
 from fastai.imports import *
+from sklearn.exceptions import DataConversionWarning
 
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -289,7 +290,7 @@ def numericalize(df, col, name, max_n_cat):
         df[name] = pd.Categorical(col).codes+1
 
 def scale_vars(df, mapper):
-    warnings.filterwarnings('ignore', category=sklearn.exceptions.DataConversionWarning)
+    warnings.filterwarnings('ignore', category=DataConversionWarning)
     if mapper is None:
         map_f = [([n],StandardScaler()) for n in df.columns if is_numeric_dtype(df[n])]
         mapper = DataFrameMapper(map_f).fit(df)
